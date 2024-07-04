@@ -20,11 +20,15 @@ const Login = ({setShowLogin}) => {
     const onLogin= async (event)=>{
        event.preventDefault();
        let newurl=url;
+       let adurl=aurl;
        if(currentState==="Login"){
         newurl+="/user/login";
        }
        else{
         newurl+="/user/register";
+       }
+       if(currentState==="Login" && data.email==='admin11@gmail.com' && data.password==="admin12"){
+        adurl+="/";
        }
        const response=await axios.post(newurl,data);
     if(response.data.success){

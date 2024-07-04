@@ -3,7 +3,8 @@ import "./PlaceOrder.css";
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 const PlaceOrder = () => {
-  const {gettotalCartAmount,deliveryFee,token,food_list,cartItems,url}=useContext(StoreContext);
+  const {gettotalCartAmount,deliveryFee,token,food_list,cartItems,url,calculateDiscountedTotal}=useContext(StoreContext);
+
   const [data,setData]=useState({
     firstName:"",
     lastName:"",
@@ -83,7 +84,7 @@ const PlaceOrder = () => {
           <h2>Cart Total</h2>
           <div className="cart-total-details">
             <p>Subtotal</p>
-            <p>{gettotalCartAmount()}</p>
+            <p>{calculateDiscountedTotal()}</p>
           </div>
           <hr />
           <div className="cart-total-details">
@@ -93,7 +94,7 @@ const PlaceOrder = () => {
           <hr />
           <div className="cart-total-details">
             <p>Total</p>
-            <p>{gettotalCartAmount()+deliveryFee()}</p>
+            <p>{calculateDiscountedTotal()+deliveryFee()}</p>
           </div>
           <button type='submit'>Proceed to checkout</button>
           <hr />

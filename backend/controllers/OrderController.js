@@ -20,18 +20,18 @@ const placeOrder=async (req,res)=>{
             product_data:{
                 name:item.name
             },
-            unit_amount:item.price
+            unit_amount:item.price*100
 
          },
          quantity:item.quantity
       }))
       line_item.push({
         price_data:{
-            currency:"inr",
+            currency:"INR",
             product_data:{
                 name:"Delivery charges",
             },
-            unit_amount:2*100*80
+            unit_amount:1
         },
         quantity:1
       })

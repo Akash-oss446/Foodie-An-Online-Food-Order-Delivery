@@ -10,6 +10,9 @@ const StoreContextProvider = ({ children }) => {
     const [food_list, setFoodList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [token, setToken] = useState("");
+    const validPromoCodes = { 'FOODE25': 20 ,'FOODE10':10};
+    const [isPromoCodeValid, setIsPromoCodeValid] = useState(false);
+    const [discount, setDiscount] = useState(0);
     const url = "http://localhost:4000";
     const aurl="http://localhost:5174";
     // useEffect(() => {
@@ -63,6 +66,13 @@ const StoreContextProvider = ({ children }) => {
             await axios.post(`${url}/cart/add`, { itemId }, { headers: { token } });
         }
     };
+    const calculateDiscountedTotal = () => {
+        const subtotal = gettotalCartAmount();
+        if (isPromoCodeValid) {
+          return subtotal - (subtotal * discount / 100);
+        }
+        return subtotal;
+      };
     // console.log(cartItems)
 
     // const removeFromCart = async (itemId) => {
@@ -194,7 +204,7 @@ const StoreContextProvider = ({ children }) => {
         token,
         setToken,
         loading,
-        aurl
+        calculateDiscountedTotal
     };
 
     return (

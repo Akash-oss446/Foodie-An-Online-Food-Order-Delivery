@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 // import FoodItem from '../../components/FoodItem/FoodItem';
 
 const Cart = () => {
-  const { cartItems, food_list,loading,  removeFromCart, gettotalCartAmount, deliveryFee } = useContext(StoreContext);
+  const { cartItems, food_list,loading,  removeFromCart, gettotalCartAmount, deliveryFee,calculateDiscountedTotal } = useContext(StoreContext);
   const navigate = useNavigate();
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -24,13 +24,7 @@ const Cart = () => {
       setIsPromoCodeValid(false);
     }
   };
-  const calculateDiscountedTotal = () => {
-    const subtotal = gettotalCartAmount();
-    if (isPromoCodeValid) {
-      return subtotal - (subtotal * discount / 100);
-    }
-    return subtotal;
-  };
+  
   // const [isLoading, setIsLoading] = useState(true);
 
   // useEffect(() => {
@@ -86,11 +80,11 @@ const Cart = () => {
             <p>₹{deliveryFee()}</p>
           </div>
           <hr />
-          {isPromoCodeValid && (
+          {isPromoCodeValid &&  (
             <>
               <div className="cart-total-details">
                 <p>Discount ({discount}%)</p>
-                <p>-₹{gettotalCartAmount() * discount / 100}</p>
+                <p>-₹{calculateDiscountedTotal()}</p>
               </div>
               <hr />
             </>
